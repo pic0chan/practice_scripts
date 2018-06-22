@@ -14,7 +14,10 @@ paths.map do |url|
 end
 threads = paths.map do |path|
   Thread.new {
-    contents["#{path}"] = conn.get "/#{path}"
+#    contents["#{path}"] = conn.get "/#{path}"
+    contents["#{path}"] = conn.get do |req|
+      req.url "/#{path}"
+    end
   }
 end
 threads.each do |thread|
